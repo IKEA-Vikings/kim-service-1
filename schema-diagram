@@ -1,6 +1,6 @@
 Table products {
   product_id int
-  product_name string
+  product_brand string
   product_category string
   product_color string
   product_size string
