@@ -1,0 +1,12 @@
+Table products {
+  product_id int
+  product_name string
+  product_category string
+  product_color string
+  product_size string
+  product_price int
+  linked_colors array
+  linked_sizes array
+  new_product boolean
+  product_available boolean
+}
