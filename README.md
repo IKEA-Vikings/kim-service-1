@@ -1,6 +1,6 @@
-# Project Name
+# About Section
 
-> Project description
+> This service will be the about section located on the right of the product details page. It will own crucial information about each product most notably the brand, category, and price of each product.
 
 ## Related Projects
 
@@ -18,6 +18,34 @@
 ## Usage
 
 > Some usage instructions
+
+> API Usage:
+- GET /api/product/:id
+
+```JSON
+{
+  "_id": integer,
+  "brand": string,
+  "category": string,
+  "color": string,
+  "price": integer,
+  "moreOptions": boolean,
+  "newItem": boolean
+}
+```
+- example response based on this [pie plate](https://www.ikea.com/us/en/p/vardagen-pie-plate-off-white-10289307/)
+
+```JSON
+{
+  "_id": 10289307,
+  "brand": "VARDAGEN",
+  "category": "Pie plate",
+  "color": "off-white",
+  "itemPrice": 7.99,
+  "moreOptions": false,
+  "newItem": false
+}
+```
 
 ## Requirements
 
