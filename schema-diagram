@@ -1,10 +1,9 @@
 Table products {
-  product_id int
-  product_brand string
-  product_category string
-  product_color string
-  product_size string
-  product_price int
+  _id integer
+  brand string
+  category string
+  color string
+  price int
   linked_colors array
   linked_sizes array
   new_product boolean
