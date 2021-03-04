@@ -1,17 +1,22 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
+  "name": "kim-service-1",
+  "version": "1.0.0",
+  "description": "about section service for IKEA clone",
+  "author": "kmgehrma",
   "license": "",
   "engines": {
     "node": ">=6.13.0"
   },
   "scripts": {
+    "express-server": "nodemon ./server/server.js"
   },
   "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.11.18",
+    "path": "^0.12.7"
   },
   "devDependencies": {
-    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor"
+    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
+    "nodemon": "^2.0.7"
   }
 }
