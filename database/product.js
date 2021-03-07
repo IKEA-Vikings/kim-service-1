@@ -39,13 +39,25 @@ var seedDatabase = function(callback) {
     });
 };
 
-var queryDatabase = function() {
-  // query for id
+var queryDatabase = function(productId, callback) {
+  // DECIDE WHETHER OR NOT THIS IS SMART; DO I WANT TO BE OPENNING A DATABASE CONNECTION EVERYTIME ???
+  mongoose.connect('mongodb://localhost/ikea', {useNewUrlParser: true, useUnifiedTopology: true});
+  const database = mongoose.connection;
+  database.on('error', err => console.log('error connecting:', err));
+  database.once('open', () => console.log('connected to database'));
+
+  Products.findById(productId, (err, results) => {
+    if (err) {
+      database.close();
+      callback(err, null);
+    } else {
+      database.close();
+      callback(null, results);
+    }
+  });
 };
 
 module.exports = {
   seedDatabase,
   queryDatabase
 };
-
-seedDatabase(() => {});
