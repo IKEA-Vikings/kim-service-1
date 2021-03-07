@@ -69,6 +69,7 @@ var randomLinkedSizes = function(productId)  {
 
 var generateRandomEntry = function(productId) {
   let object = {
+    _id: productId,
     brand: randomBrand(),
     category: randomCategory(),
     color: randomColor(),
@@ -82,4 +83,12 @@ var generateRandomEntry = function(productId) {
   return object;
 };
 
-exports.generateRandomEntry = generateRandomEntry;
+var generateRandomEntries = function() {
+  let entries = [];
+  for (let i = 1; i <= 100; i++) {
+    entries.push(generateRandomEntry(i));
+  }
+  return entries;
+};
+
+exports.generateRandomEntries = generateRandomEntries;
