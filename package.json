@@ -8,6 +8,7 @@
     "node": ">=6.13.0"
   },
   "scripts": {
+    "react-dev": "webpack --watch",
     "express-server": "nodemon ./server/server.js"
   },
   "dependencies": {
