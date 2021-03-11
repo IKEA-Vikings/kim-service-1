@@ -8,10 +8,10 @@ const productSchema = new Schema({
   category: String,
   color: String,
   price: Number,
-  linked_colors: Array,
-  linked_sizes: Array,
-  new_product: Boolean,
-  product_available: Boolean
+  linkedColors: Array,
+  linkedSizes: Array,
+  newProduct: Boolean,
+  productAvailable: Boolean
 });
 
 const Products = mongoose.model('product', productSchema);
