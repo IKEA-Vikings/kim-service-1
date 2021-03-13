@@ -91,4 +91,19 @@ var generateRandomEntries = function() {
   return entries;
 };
 
-exports.generateRandomEntries = generateRandomEntries;
+module.exports = {
+  generateRandomEntries,
+  generateRandomEntry,
+  randomLinkedSizes,
+  randomLinkedColors,
+  randomValueProductAvailable,
+  randomValueNewProduct,
+  randomPrice,
+  randomColor,
+  randomCategory,
+  randomBrand,
+  prices,
+  colors,
+  categories,
+  brands
+};
