@@ -1,13 +1,22 @@
 const express = require('express');
 const path = require('path');
+const bodyParser = require('body-parser');
+
 const app = express();
 const port = 3003;
+
 const database = require('../database/product');
 
 app.use(express.static(path.join(__dirname, '../', 'public')));
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 app.listen(port, () => {
   console.log(`about section is visible at http://localhost:${port}`);
+});
+
+app.get('/:id', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../', 'public/index.html'));
 });
 
 app.get('/api/product/:id', (req, res) => {
@@ -53,5 +62,6 @@ var formatResponse = function(dbData) {
   }
   response.newProduct = dbData.newProduct;
   response.productAvailable = dbData.productAvailable;
+  response.dataQueried = true;
   return response;
 };
