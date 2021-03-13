@@ -5,19 +5,35 @@ class About extends React.Component {
     super(props);
     this.state = {
       _id: 0,
-      brand: 'TEST',
-      category: 'This category',
-      color: 'cobalt',
-      price: 0.75,
+      brand: '',
+      category: '',
+      color: '',
+      price: 0,
       linkedColors: [],
       linkedSizes: [],
-      productAvaliable: true
+      productAvaliable: true,
+      dataQueried: false
     };
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
+
   componentDidMount() {
-    // let productId = this.props.params.productId;
-    // console.log(productId);
+    let url = window.location.href;
+    let splitUrl = url.split('/');
+    let queriedId = splitUrl[3];
+    if (queriedId.length === 0) {
+      // this is for if the url is simply localhost:3003 with no id specified
+      return;
+    }
+    fetch(`/api/product/${queriedId}`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        // console.log(jsonResponse);
+        this.setState(jsonResponse);
+      });
   }
 
   render() {
@@ -36,19 +52,27 @@ class About extends React.Component {
       moreOptions = <div></div>;
     }
 
-    return (
-      <div>
-        <div>{this.state.brand}</div>
-        <div>{this.state.price}</div>
-        <div>{this.state.category}, {this.state.color}, <span>{/** query for size */}</span></div>
-        <div>{/** query for reviews */}</div>
-        {moreOptions}
-        <button>Add to bag</button>
-        <button>♥</button>
-        {availability}
-        <div>We're sorry, due to COVID-19 delivery times are running longer than usual. We are actively working to improve these issues.</div>
+    if (!this.state.dataQueried) {
+      return (<div className="errorMessage">
+        This service is currently experiencing technical difficulties. Apologies for the inconvenience.
+      </div>
+      );
+    } else {
+      return (
+        <div>
+          <div>{this.state.brand}</div>
+          <div>{this.state.price}</div>
+          <div>{this.state.category}, {this.state.color}, <span>{/** query for size */}</span></div>
+          <div>{/** query for reviews */}</div>
+          {moreOptions}
+          <button>Add to bag</button>
+          <button>♥</button>
+          {availability}
+          <div>We're sorry, due to COVID-19 delivery times are running longer than usual. We are actively working to improve these issues.</div>
 
-      </div>);
+        </div>
+      );
+    }
   }
 }
 
