@@ -1,4 +1,6 @@
 import React from 'react';
+import MoreColors from './moreColors.jsx';
+import MoreSizes from './moreSizes.jsx';
 
 class About extends React.Component {
   constructor(props) {
@@ -55,25 +57,24 @@ class About extends React.Component {
     let moreColors;
     let moreSizes;
     if (this.state.productAvaliable) {
-      availability = <div>Available for delivery in select locations</div>;
+      availability = <div className="aboutAvailability">Available for delivery in select locations</div>;
     } else {
-      availability = <div>Not available for delivery</div>;
+      availability = <div className="aboutAvailability">Not available for delivery</div>;
     }
 
     if (this.state.moreOptions) {
       if (this.state.linkedColors.length !== 0) {
         // eventually these will not be ids but rather images, will need to query Phucci's service
-        moreColors = <div className="aboutMoreColors">{this.state.linkedColors.toString()}</div>;
+        moreColors = <MoreColors color={this.state.color} colorOptions={this.state.linkedColors}/>;
       } else {
         moreColors = <div></div>;
       }
       if (this.state.linkedSizes.length !== 0) {
-        // eventually these will not be ids but rather images, will need to query Phucci's service
-        moreSizes = <div className="aboutMoreSizes">{this.state.linkedSizes.toString()}</div>;
+        moreSizes = <MoreSizes size={this.state.size}/>;
       } else {
         moreSizes = <div></div>;
       }
-      moreOptions = <div className="aboutMoreOptions">{moreSizes}{moreColors}</div>;
+      moreOptions = <div className="aboutMoreOptions">{moreColors}{moreSizes}</div>;
 
     } else {
       moreOptions = <div></div>;
@@ -95,7 +96,7 @@ class About extends React.Component {
           <button className="aboutAddToBagButton">Add to bag</button>
           <button className="aboutHeartButton">♥</button>
           {availability}
-          <div>We're sorry, due to COVID-19 delivery times are running longer than usual. We are actively working to improve these issues.</div>
+          <div className="aboutCOVID">We're sorry, due to COVID-19 delivery times are running longer than usual. We are actively working to improve these issues.</div>
 
         </div>
       );
