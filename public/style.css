@@ -1,0 +1,30 @@
+.aboutComponent {
+  width: 30%;
+  height: 40%;
+}
+
+.aboutBrand {
+  float: left;
+}
+
+.aboutPrice {
+  float: right;
+}
+
+.aboutDescription {
+  clear: both;
+}
+
+.aboutAddToBagButton {
+  width: 70%;
+  background: #0058a3;
+}
+
+.aboutHeartButton {
+  position: relative;
+  width: 10%;
+  height: 10%;
+
+  border-radius: 50%;
+  border: 1px solid #dfdfdf;
+}
