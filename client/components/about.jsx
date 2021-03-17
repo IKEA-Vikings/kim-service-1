@@ -1,6 +1,7 @@
 import React from 'react';
 import MoreColors from './moreColors.jsx';
 import MoreSizes from './moreSizes.jsx';
+import styles from '../style.module.css';
 
 class About extends React.Component {
   constructor(props) {
@@ -29,7 +30,7 @@ class About extends React.Component {
       // this is for if the url is simply localhost:3003 with no id specified
       return;
     }
-    fetch(`/api/product/${queriedId}`)
+    fetch(`http://localhost:3003/api/product/${queriedId}`)
       .then((response) => {
         return response.json();
       })
@@ -57,9 +58,9 @@ class About extends React.Component {
     let moreColors;
     let moreSizes;
     if (this.state.productAvaliable) {
-      availability = <div className="aboutAvailability">Available for delivery in select locations</div>;
+      availability = <div className={styles.aboutAvailability}>Available for delivery in select locations</div>;
     } else {
-      availability = <div className="aboutAvailability">Not available for delivery</div>;
+      availability = <div className={styles.aboutAvailability}>Not available for delivery</div>;
     }
 
     if (this.state.moreOptions) {
@@ -74,29 +75,29 @@ class About extends React.Component {
       } else {
         moreSizes = <div></div>;
       }
-      moreOptions = <div className="aboutMoreOptions">{moreColors}{moreSizes}</div>;
+      moreOptions = <div className={styles.aboutMoreOptions}>{moreColors}{moreSizes}</div>;
 
     } else {
       moreOptions = <div></div>;
     }
 
     if (!this.state.dataQueried) {
-      return (<div className="errorMessage">
+      return (<div className={styles.errorMessage}>
         This service is currently experiencing technical difficulties. Apologies for the inconvenience.
       </div>
       );
     } else {
       return (
-        <div className="aboutComponent">
-          <div className="aboutBrand">{this.state.brand}</div>
-          <div className="aboutPrice">${this.state.price}</div>
-          <div className="aboutDescription">{this.state.category}, {this.state.color}, <span className="aboutSize">{this.state.size}</span></div>
-          <div className="aboutReviews">{/** query for reviews */}</div>
+        <div className={styles.aboutComponent}>
+          <div className={styles.aboutBrand}>{this.state.brand}</div>
+          <div className={styles.aboutPrice}>${this.state.price}</div>
+          <div className={styles.aboutDescription}>{this.state.category}, {this.state.color}, <span className={styles.aboutSize}>{this.state.size}</span></div>
+          <div className={styles.aboutReviews}>{/** query for reviews */}</div>
           {moreOptions}
-          <button className="aboutAddToBagButton">Add to bag</button>
-          <button className="aboutHeartButton">♥</button>
+          <button className={styles.aboutAddToBagButton}>Add to bag</button>
+          <button className={styles.aboutHeartButton}>♥</button>
           {availability}
-          <div className="aboutCOVID">We're sorry, due to COVID-19 delivery times are running longer than usual. We are actively working to improve these issues.</div>
+          <div className={styles.aboutCOVID}>We're sorry, due to COVID-19 delivery times are running longer than usual. We are actively working to improve these issues.</div>
 
         </div>
       );
