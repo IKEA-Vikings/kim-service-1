@@ -30,7 +30,7 @@ class About extends React.Component {
       // this is for if the url is simply localhost:3003 with no id specified
       return;
     }
-    fetch(`http://localhost:3003/api/product/${queriedId}`)
+    fetch(`/api/product/${queriedId}`)
       .then((response) => {
         return response.json();
       })
@@ -39,13 +39,13 @@ class About extends React.Component {
         this.setState(jsonResponse);
       });
     // fetching from Virgina's service for sizes
-    fetch(`http://localhost:3002/api/sizes/${queriedId}`)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log('error fetching sizes', error);
-      });
+    // fetch(`http://localhost:3002/api/sizes/${queriedId}`)
+    //   .then((response) => {
+    //     console.log(response);
+    //   })
+    //   .catch((error) => {
+    //     console.log('error fetching sizes', error);
+    //   });
 
     // fetch from Josh's service for star rating
 
