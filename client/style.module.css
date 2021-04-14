@@ -1,71 +1,165 @@
-.aboutComponent {
-  /* width: 30%; */
-  height: auto;
-  display: grid;
-  grid-template-columns: repeat(5, 20%);
-  /* grid-template-rows: repeat(20, 5%); */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+* {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 100%;
 }
 
-.aboutMoreOptions {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+.aboutComponent {
+  width: 30%;
+  height: auto;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 .aboutMoreColors {
-  grid-column: 1/6;
-}
-.aboutMoreSizes {
-  grid-column: 1/6;
+  margin-top: 3em;
+  border-top: 2px solid #d3d3d3;
+  padding-top: 1.5em;
+  margin-bottom: 2em;
 }
 
 .aboutBrand {
-  grid-column: 1/5;
-  /* grid-row: 1/3; */
+  font-size: 2rem;
+  line-height: 1.5;
+  font-weight: 900;
+  float: left;
 }
 
 .aboutPrice {
-  grid-column: 5;
-  /* grid-row: 1/3; */
+  font-size: 2rem;
+  line-height: 1.5;
+  font-weight: 900;
+  float: right;
 }
 
 .aboutDescription {
-  grid-column: 1/5;
-  /* grid-row:3; */
+  line-height: 1.5;
+  clear: both;
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
 }
 
 .aboutAddToBagButton {
-  grid-column: 1/5;
+  font-size: inherit;
+  border-radius: 50px;
+  line-height: 1.5;
+  font-weight: 900;
+  text-align: center;
   background: #0058a3;
+  border: 1px #0058a3 solid;
   color: #ffffff;
+  cursor: pointer;
+  height: 3.5rem;
+  width: 15.5rem;
+  margin-left: 0.5em;
+  margin-right: 2em;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 .aboutHeartButton {
-  grid-column: 5;
-  border-radius: 100%;
+  font-size: inherit;
+  border-radius: 50px;
+  align-items: center;
+  vertical-align: middle;
+  font-size: 1rem;
+  line-height: 1rem;
+  height: 3.5rem;
+  width: 3.5rem;
   border: 1px solid #dfdfdf;
   background-color: #ffffff;
+  padding: 0 1.25rem;
+  cursor: pointer;
 }
 
 .aboutAvailability {
-  grid-column: 1/6;
+  clear: both;
+  margin-bottom: 1.5em;
+}
+
+.aboutAvailabilityText {
+  float: left;
+}
+
+.aboutCOVIDText {
+  float: left;
+  margin-left: 2em;
 }
 
 .aboutCOVID {
-  grid-column: 1/6;
-}
-.aboutArrowButton {
-  float:right;
+  clear: both;
 }
 
-/* .aboutMoreSizesTitle {
-  float: left;
+.aboutMoreSizesTitle {
+  font-weight: 900;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  font-size: 1.25em;
 }
-.aboutMoreColorsTitle {
-  float: left;
-} */
+
 .aboutMoreSizesSize {
-  float: left;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  margin-bottom: 0.5em;
 }
+
+.aboutMoreColorsTitle {
+  font-weight: 900;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  font-size: 1.25em;
+}
+
 .aboutMoreColorsColor {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  margin-bottom: 0.5em;
+}
+
+.imageTiles {
+  clear: both;
+  height: 100px;
+  width: 100px;
+  padding: 2%;
+}
+
+.imageTiles:hover {
+  border: 1px #000 solid;
+  border-radius: 5px;
+}
+
+.extraLineHeight {
+  font-size: 2rem;
+  line-height: 2.5;
+}
+
+.bottomIcons{
   float: left;
+  padding-right: 1em;
+}
+
+.userButtonsContainer {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.gridForMore {
+  display: grid;
+  grid-template-columns: 90% 10%;
+  grid-template-rows: 1fr 1fr;
+  justify-items: start;
+  margin-bottom: 1em;
+}
+
+.aboutArrowButton {
+  cursor: pointer;
 }
