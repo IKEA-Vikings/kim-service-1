@@ -6,7 +6,7 @@
 }
 
 .aboutComponent {
-  width: 30%;
+  width: 60%;
   height: auto;
   padding-left: 1em;
   padding-right: 1em;
@@ -127,15 +127,31 @@
 
 .imageTiles {
   clear: both;
-  height: 100px;
-  width: 100px;
-  padding: 2%;
+  height: 90px;
+  width: 90px;
+  padding: 1%;
+  margin: 1%;
 }
 
 .imageTiles:hover {
   border: 1px #000 solid;
   border-radius: 5px;
 }
+
+.imageTilesFirstChild {
+  clear: both;
+  height: 90px;
+  width: 90px;
+  padding: 1%;
+  margin: 1%;
+  border: 3px #000 solid;
+  border-radius: 5px;
+}
+.imageTilesFirstChild:hover {
+  border: 2px #000 solid;
+  border-radius: 5px;
+}
+
 
 .extraLineHeight {
   font-size: 2rem;
