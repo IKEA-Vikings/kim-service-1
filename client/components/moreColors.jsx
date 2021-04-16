@@ -8,9 +8,9 @@ const MoreColors = (props) => {
   const imageUrls = props.images;
   const images = imageUrls.map((url, index) => {
     if (index === 0) {
-      return (<img src={url} className={styles.imageTilesFirstChild} key={index}/>);
+      return (<img src={url} className={styles.imageTilesFirstChild} key={index} alt="product being viewed"/>);
     } else {
-      return (<img src={url} className={styles.imageTiles} key={index}/>);
+      return (<img src={url} className={styles.imageTiles} key={index} alt="alternative colors to the product being viewed"/>);
     }
 
   });

@@ -1,8 +1,8 @@
 import React from 'react';
 import MoreColors from './moreColors.jsx';
 import MoreSizes from './moreSizes.jsx';
-import MoreColorsSidebar from './moreColorsSidebar.jsx';
-import MoreSizesSidebar from './moreSizesSidebar.jsx';
+// import MoreColorsSidebar from './moreColorsSidebar.jsx';
+// import MoreSizesSidebar from './moreSizesSidebar.jsx';
 import styles from '../style.module.css';
 import AWS from './urls.js';
 import axios from 'axios';
