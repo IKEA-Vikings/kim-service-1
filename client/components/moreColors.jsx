@@ -6,7 +6,14 @@ import { faGreaterThan } from '@fortawesome/free-solid-svg-icons';
 const MoreColors = (props) => {
 
   const imageUrls = props.images;
-  const images = imageUrls.map((url) => <img src={url} className={styles.imageTiles}/>);
+  const images = imageUrls.map((url, index) => {
+    if (index === 0) {
+      return (<img src={url} className={styles.imageTilesFirstChild} key={index}/>);
+    } else {
+      return (<img src={url} className={styles.imageTiles} key={index}/>);
+    }
+
+  });
 
   return (<div className={styles.aboutMoreColors}>
     <div className={styles.gridForMore}>
