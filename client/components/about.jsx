@@ -50,61 +50,87 @@ class About extends React.Component {
       })
       .then((jsonResponse) => {
         this.setState(jsonResponse);
-        return jsonResponse.linkedColors;
+        // return jsonResponse.linkedColors;
+      });
+
+    // PHUCCI CHANGED URL
+    // fetch images if there are moreColors
+    // .then((colorArray) => {
+    //   let moreColorsImageUrls = [];
+    //   let imageUrls = [];
+    //   for (let i = 0; i < colorArray.length; i++) {
+    //     imageUrls.push(`${AWS.imageAPI}${colorArray[i]}`);
+    //   }
+    //   let fetchUrlData = function(url) {
+    //     return axios.get(url)
+    //       .then(response => {
+    //         return {
+    //           success: true,
+    //           data: response.data[0]
+    //         };
+    //       })
+    //       .catch(error => {
+    //         return {success: false};
+    //       });
+    //   };
+
+    //   return Promise.all(imageUrls.map(fetchUrlData));
+    // })
+    // .then((moreImageArrayPromises) => {
+    //   let imageUrls = [];
+    //   for (let i = 0; i < moreImageArrayPromises.length; i++) {
+    //     imageUrls.push(moreImageArrayPromises[i].data);
+    //   }
+    //   let stateObject = {
+    //     images: imageUrls
+    //   };
+    //   this.setState(stateObject);
+    // })
+    // .catch(err => console.error(err));
+
+    axios.get(`${AWS.relatedColors}${queriedId}`)
+      .then((response) => {
+        return response.data;
       })
-      // fetch images if there are moreColors
-      .then((colorArray) => {
-        let moreColorsImageUrls = [];
-        let imageUrls = [];
-        for (let i = 0; i < colorArray.length; i++) {
-          imageUrls.push(`${AWS.imageAPI}${colorArray[i]}`);
-        }
-        let fetchUrlData = function(url) {
-          return axios.get(url)
-            .then(response => {
-              return {
-                success: true,
-                data: response.data[0]
-              };
+      .then((relatedColorsArr) => {
+        if (relatedColorsArr.length !== 0) {
+          axios.get(`${AWS.imageAPI}${queriedId}`)
+            .then((response) => {
+              relatedColorsArr.unshift(response.data[0]);
+              return relatedColorsArr;
             })
-            .catch(error => {
-              return {success: false};
+            .then((modifiedColorsArr) => {
+              let stateObject = {
+                images: modifiedColorsArr
+              };
+              this.setState(stateObject);
             });
-        };
-
-        return Promise.all(imageUrls.map(fetchUrlData));
-      })
-      .then((moreImageArrayPromises) => {
-        let imageUrls = [];
-        for (let i = 0; i < moreImageArrayPromises.length; i++) {
-          imageUrls.push(moreImageArrayPromises[i].data);
         }
-        let stateObject = {
-          images: imageUrls
-        };
-        this.setState(stateObject);
       })
-      .catch(err => console.error(err));
-
+      .catch((err) => {
+        console.log('err fetching images for related products', err);
+      });
 
 
     // fetching from Virgina's service for sizes
-    // fetch(`http://localhost:3002/api/sizes/${queriedId}`)
-    //   .then((response) => {
-    //     console.log(response);
-    //   })
-    //   .catch((error) => {
-    //     console.log('error fetching sizes', error);
-    //   });
+    axios.get(`${AWS.sizeAPI}${queriedId}`)
+      .then((response) => {
+        let data = {};
+        data.size = response.data.title;
+        this.setState(data);
+      })
+      .catch((error) => {
+        console.log('error fetching sizes', error);
+      });
 
     // fetch from Josh's service for star rating
     // axios.get(`${AWS.reviewAPI}${queriedId}`)
     //   .then((response) => {
-    //     console.log(response);
+    //     console.log('reviews for before processing', response);
     //     return response.json();
     //   })
     //   .then((jsonResponse) => {
-    //     console.log(jsonResponse);
+    //     console.log('reviews after processing', jsonResponse);
     //     // this.setState(jsonResponse);
     //   });
   }
@@ -130,23 +156,27 @@ class About extends React.Component {
       );
     }
 
-    if (this.state.moreOptions) {
-      if (this.state.linkedColors.length !== 0) {
-        // eventually these will not be ids but rather images, will need to query Phucci's service
-        moreColors = <MoreColors color={this.state.color} colorOptions={this.state.linkedColors} images={this.state.images}/>;
-      } else {
-        moreColors = <div></div>;
-      }
-      if (this.state.linkedSizes.length !== 0) {
-        moreSizes = <MoreSizes size={this.state.size}/>;
-      } else {
-        moreSizes = <div></div>;
-      }
-      moreOptions = <div className={styles.aboutMoreOptions}>{moreColors}{moreSizes}</div>;
+    // if (this.state.moreOptions) {
 
+    if (this.state.images.length !== 0) {
+
+      // line below used for previous implementation (before Phucci set up another endpoint)
+      // if (this.state.linkedColors.length !== 0) {
+      // eventually these will not be ids but rather images, will need to query Phucci's service
+      moreColors = <MoreColors color={this.state.color} colorOptions={this.state.linkedColors} images={this.state.images}/>;
     } else {
-      moreOptions = <div></div>;
+      moreColors = <div></div>;
     }
+    if (this.state.linkedSizes.length !== 0) {
+      moreSizes = <MoreSizes size={this.state.size}/>;
+    } else {
+      moreSizes = <div></div>;
+    }
+    moreOptions = <div className={styles.aboutMoreOptions}>{moreColors}{moreSizes}</div>;
+
+    // } else {
+    //   moreOptions = <div></div>;
+    // }
 
     if (!this.state.dataQueried) {
       return (<div className={styles.errorMessage}>
