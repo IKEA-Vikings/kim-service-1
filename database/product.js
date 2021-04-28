@@ -16,6 +16,8 @@ const productSchema = new Schema({
 
 const Products = mongoose.model('product', productSchema);
 
+// Seeding script
+
 var seedDatabase = function(callback) {
   mongoose.connect('mongodb://localhost/ikea', {useNewUrlParser: true, useUnifiedTopology: true});
   const database = mongoose.connection;
