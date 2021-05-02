@@ -61,7 +61,104 @@ var queryDatabase = function(productId, callback) {
   });
 };
 
+////////// Beginning of ew CRUD queries
+
+
+const createQuery = async (data) => {
+  mongoose.connect('mongodb://localhost/ikea', {useNewUrlParser: true, useUnifiedTopology: true});
+  const database = mongoose.connection;
+  database.on('error', err => console.log('error connecting:', err));
+  database.once('open', () => console.log('connected to database'));
+
+  // Get ID of latest entry in database
+  const lastEntry = await Products.find({}).sort({_id: -1}).limit(1);
+  const newID = lastEntry[0]._id + 1;
+
+  // If input data is empty
+  if (Object.keys(data).length === 0) {
+    // Use seeding script to generate data
+    data = dummyData.generateRandomEntry(newID);
+  } else {
+    // Update ID before saving
+    data._id = newID;
+  }
+
+  const newEntry = new Products(data);
+
+  newEntry.save(newEntry)
+    .then(result => {
+      database.close();
+    })
+    .catch(err => {
+      database.close();
+      console.log('Error with MongoDB create query', err);
+    });
+
+  return data;
+};
+
+const updateQuery = async (id, data) => {
+  if (Object.keys(data).length !== 0) {
+    mongoose.connect('mongodb://localhost/ikea', {useNewUrlParser: true, useUnifiedTopology: true});
+    const database = mongoose.connection;
+    database.on('error', err => console.log('error connecting:', err));
+    database.once('open', () => console.log('connected to database'));
+
+    Products.replaceOne({_id: id}, data)
+      .then(result => {
+        database.close();
+      })
+      .catch(err => {
+        database.close();
+        console.log('Error with MongoDB update query', err);
+      });
+  }
+};
+
+const readQuery = async (id) => {
+  mongoose.connect('mongodb://localhost/ikea', {useNewUrlParser: true, useUnifiedTopology: true});
+  const database = mongoose.connection;
+  database.on('error', err => console.log('error connecting:', err));
+  database.once('open', () => console.log('connected to database'));
+
+  // Query for product by ID
+  const product = await Products.findById(id)
+    .catch(err => {
+      if (err) {
+        console.log('Error with MongoDB read query');
+      }
+    });
+  database.close();
+  return product;
+};
+
+const deleteQuery = async (id) => {
+  mongoose.connect('mongodb://localhost/ikea', {useNewUrlParser: true, useUnifiedTopology: true});
+  const database = mongoose.connection;
+  database.on('error', err => console.log('error connecting:', err));
+  database.once('open', () => console.log('connected to database'));
+
+  // Query for product by ID and then delete
+  await Products.deleteOne({_id: id})
+    .then(result => {
+      database.close();
+    })
+    .catch(err => {
+      if (err) {
+        database.close();
+        console.log('Error with MongoDB delete query', err);
+      }
+    });
+};
+
+
+////////// End of new CRUD queries
+
 module.exports = {
   seedDatabase,
-  queryDatabase
+  queryDatabase,
+  createQuery,
+  updateQuery,
+  readQuery,
+  deleteQuery
 };
