@@ -61,7 +61,7 @@ var queryDatabase = function(productId, callback) {
   });
 };
 
-////////// Beginning of ew CRUD queries
+////////// Beginning of new CRUD queries
 
 
 const createQuery = async (data) => {
@@ -97,24 +97,6 @@ const createQuery = async (data) => {
   return data;
 };
 
-const updateQuery = async (id, data) => {
-  if (Object.keys(data).length !== 0) {
-    mongoose.connect('mongodb://localhost/ikea', {useNewUrlParser: true, useUnifiedTopology: true});
-    const database = mongoose.connection;
-    database.on('error', err => console.log('error connecting:', err));
-    database.once('open', () => console.log('connected to database'));
-
-    Products.replaceOne({_id: id}, data)
-      .then(result => {
-        database.close();
-      })
-      .catch(err => {
-        database.close();
-        console.log('Error with MongoDB update query', err);
-      });
-  }
-};
-
 const readQuery = async (id) => {
   mongoose.connect('mongodb://localhost/ikea', {useNewUrlParser: true, useUnifiedTopology: true});
   const database = mongoose.connection;
@@ -130,6 +112,25 @@ const readQuery = async (id) => {
     });
   database.close();
   return product;
+};
+
+const updateQuery = async (id, data) => {
+  // function will not do anything if data is empty
+  if (Object.keys(data).length !== 0) {
+    mongoose.connect('mongodb://localhost/ikea', {useNewUrlParser: true, useUnifiedTopology: true});
+    const database = mongoose.connection;
+    database.on('error', err => console.log('error connecting:', err));
+    database.once('open', () => console.log('connected to database'));
+
+    Products.updateOne({_id: id}, {$set: data})
+      .then(result => {
+        database.close();
+      })
+      .catch(err => {
+        database.close();
+        console.log('Error with MongoDB update query', err);
+      });
+  }
 };
 
 const deleteQuery = async (id) => {

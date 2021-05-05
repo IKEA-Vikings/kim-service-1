@@ -51,20 +51,6 @@ app.post('/api/product/', (req, res) => {
     });
 });
 
-app.put('/api/product/:id', (req, res) => {
-  const productId = req.params.id;
-  database.updateQuery(productId, req.body)
-    .then(result => {
-      res.status(204).end();
-    })
-    .catch(err => {
-      if (err) {
-        console.log('Error with update API route');
-        res.status(400).end();
-      }
-    });
-});
-
 app.get('/api/product/:id', (req, res) => {
   const productId = req.params.id;
   database.readQuery(productId)
@@ -74,6 +60,21 @@ app.get('/api/product/:id', (req, res) => {
     .catch(err => {
       if (err) {
         console.log('Error with reading API route', err);
+        res.status(400).end();
+      }
+    });
+});
+
+app.put('/api/product/:id', (req, res) => {
+  const productId = req.params.id;
+  console.log('body ->', req.body);
+  database.updateQuery(productId, req.body)
+    .then(result => {
+      res.status(204).end();
+    })
+    .catch(err => {
+      if (err) {
+        console.log('Error with update API route');
         res.status(400).end();
       }
     });
