@@ -17,31 +17,30 @@ const productSchema = new Schema({
 const Products = mongoose.model('product', productSchema);
 
 
+// Origin seeding script
 
-// Seeding script
+// var seedDatabase = function(callback) {
+//   mongoose.connect('mongodb://localhost/ikea', {useNewUrlParser: true, useUnifiedTopology: true});
+//   const database = mongoose.connection;
+//   database.on('error', err => console.log('error connecting:', err));
+//   database.once('open', () => console.log('connected to database'));
+//   database.dropDatabase()
+//     .then(() => {
+//       let entries = dummyData.generateRandomEntries();
 
-var seedDatabase = function(callback) {
-  mongoose.connect('mongodb://localhost/ikea', {useNewUrlParser: true, useUnifiedTopology: true});
-  const database = mongoose.connection;
-  database.on('error', err => console.log('error connecting:', err));
-  database.once('open', () => console.log('connected to database'));
-  database.dropDatabase()
-    .then(() => {
-      let entries = dummyData.generateRandomEntries();
-
-      return Products.insertMany(entries);
-    })
-    .then((results) => {
-      console.log('successfully seeded database');
-      database.close();
-      callback(null, results);
-    })
-    .catch((err) => {
-      console.log('err seeding database', err);
-      database.close();
-      callback(err, null);
-    });
-};
+//       return Products.insertMany(entries);
+//     })
+//     .then((results) => {
+//       console.log('successfully seeded database');
+//       database.close();
+//       callback(null, results);
+//     })
+//     .catch((err) => {
+//       console.log('err seeding database', err);
+//       database.close();
+//       callback(err, null);
+//     });
+// };
 
 var queryDatabase = function(productId, callback) {
   // DECIDE WHETHER OR NOT THIS IS SMART; DO I WANT TO BE OPENNING A DATABASE CONNECTION EVERYTIME ???
@@ -59,6 +58,38 @@ var queryDatabase = function(productId, callback) {
       callback(null, results);
     }
   });
+};
+
+////////// New seeding script
+
+var seedDatabase = function(callback) {
+  mongoose.connect('mongodb://localhost/ikea', {useNewUrlParser: true, useUnifiedTopology: true});
+  const database = mongoose.connection;
+  database.on('error', err => console.log('error connecting:', err));
+  database.once('open', () => console.log('connected to database'));
+  database.dropDatabase()
+    .then(async () => {
+      let entries = [];
+      for (let i = 1; i <= 10000000; i++) {
+        entries.push(dummyData.generateRandomEntry(i));
+        if (entries.length === 100000) {
+          await Products.insertMany(entries);
+          console.log(`${i} entries saved`);
+          entries = [];
+        }
+      }
+      return 'Worked';
+    })
+    .then((results) => {
+      console.log('successfully seeded database');
+      database.close();
+      callback(null, results);
+    })
+    .catch((err) => {
+      console.log('err seeding database', err);
+      database.close();
+      callback(err, null);
+    });
 };
 
 ////////// Beginning of new CRUD queries

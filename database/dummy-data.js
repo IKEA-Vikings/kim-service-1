@@ -85,7 +85,7 @@ var generateRandomEntry = function(productId) {
 
 var generateRandomEntries = function() {
   let entries = [];
-  for (let i = 1; i <= 100; i++) {
+  for (let i = 1; i <= 100000; i++) {
     entries.push(generateRandomEntry(i));
   }
   return entries;
