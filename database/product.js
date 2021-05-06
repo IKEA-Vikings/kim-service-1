@@ -16,8 +16,7 @@ const productSchema = new Schema({
 
 const Products = mongoose.model('product', productSchema);
 
-
-// Origin seeding script
+// // Original seeding script
 
 // var seedDatabase = function(callback) {
 //   mongoose.connect('mongodb://localhost/ikea', {useNewUrlParser: true, useUnifiedTopology: true});
@@ -60,7 +59,9 @@ var queryDatabase = function(productId, callback) {
   });
 };
 
+
 ////////// New seeding script
+
 
 var seedDatabase = function(callback) {
   mongoose.connect('mongodb://localhost/ikea', {useNewUrlParser: true, useUnifiedTopology: true});
@@ -91,6 +92,7 @@ var seedDatabase = function(callback) {
       callback(err, null);
     });
 };
+
 
 ////////// Beginning of new CRUD queries
 
@@ -183,8 +185,6 @@ const deleteQuery = async (id) => {
     });
 };
 
-
-////////// End of new CRUD queries
 
 module.exports = {
   seedDatabase,
