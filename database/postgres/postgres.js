@@ -8,11 +8,7 @@ const client = new Client({
 });
 
 const schema = `
-
-
   DROP TABLE products;
-
-
   CREATE TABLE IF NOT EXISTS products (
   id SERIAL NOT NULL PRIMARY KEY,
   brand VARCHAR(15) NOT NULL,
@@ -40,6 +36,9 @@ const createTable = async () => {
     });
 };
 
+
+
 module.exports = {
+  client,
   createTable
 };

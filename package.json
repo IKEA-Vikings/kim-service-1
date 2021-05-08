@@ -16,7 +16,8 @@
   "scripts": {
     "react-dev": "webpack --watch",
     "express-server": "nodemon ./server/server.js",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "seed-postgres": "node ./database/postgres/seedPostgres.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
