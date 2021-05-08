@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const {createTable} = require('../database/postgres/postgres.js');
 
 const app = express();
 const port = 3003;
@@ -129,5 +130,16 @@ app.delete('/api/product/:id', (req, res) => {
         console.log('Error with delete API route', err);
         res.status(400).end();
       }
+    });
+});
+
+app.get('/api/postgres', async (req, res) => {
+  await createTable()
+    .then(() => {
+      console.log('SERVER - Table created');
+      res.status(201).end();
+    })
+    .catch(err => {
+      console.log('SERVER - Error creating table', err);
     });
 });

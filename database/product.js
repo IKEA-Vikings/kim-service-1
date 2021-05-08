@@ -46,7 +46,7 @@ var queryDatabase = function(productId, callback) {
   mongoose.connect('mongodb://localhost/ikea', {useNewUrlParser: true, useUnifiedTopology: true});
   const database = mongoose.connection;
   database.on('error', err => console.log('error connecting:', err));
-  database.once('open', () => console.log('connected to database'));
+  database.once('open', () => console.log('connected to Mongo database'));
 
   Products.findById(productId, (err, results) => {
     if (err) {
