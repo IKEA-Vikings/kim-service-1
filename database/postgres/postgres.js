@@ -27,7 +27,6 @@ const schema = `
 `;
 
 const createTable = async () => {
-  console.log('connected to postgres');
   await client.connect();
   client.query(schema)
     .then(res => {

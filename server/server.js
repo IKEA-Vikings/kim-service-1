@@ -136,7 +136,6 @@ app.delete('/api/product/:id', (req, res) => {
 app.get('/api/postgres', async (req, res) => {
   await createTable()
     .then(() => {
-      console.log('SERVER - Table created');
       res.status(201).end();
     })
     .catch(err => {
