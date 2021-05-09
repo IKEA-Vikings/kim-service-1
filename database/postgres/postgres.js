@@ -22,22 +22,6 @@ const schema = `
 );
 `;
 
-// const createTable = async () => {
-//   await pool.connect();
-//   pool.query(schema)
-//     .then(res => {
-//       console.log('Table successfully created');
-//     })
-//     .catch(err => {
-//       console.log('Error creating table', err);
-//     })
-//     .finally(() => {
-//       pool.end();
-//     });
-// };
-
-
-
 module.exports = {
   pool,
   schema

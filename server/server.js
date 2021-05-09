@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const {createTable} = require('../database/postgres/postgres.js');
+const {/* need to add queries */} = require('../database/postgres/postgres.js');
 
 const app = express();
 const port = 3003;
@@ -133,12 +133,12 @@ app.delete('/api/product/:id', (req, res) => {
     });
 });
 
-app.get('/api/postgres', async (req, res) => {
-  await createTable()
-    .then(() => {
-      res.status(201).end();
-    })
-    .catch(err => {
-      console.log('SERVER - Error creating table', err);
-    });
-});
+// app.get('/api/postgres', async (req, res) => {
+//   await createTable()
+//     .then(() => {
+//       res.status(201).end();
+//     })
+//     .catch(err => {
+//       console.log('SERVER - Error creating table', err);
+//     });
+// });

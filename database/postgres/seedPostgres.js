@@ -2,6 +2,18 @@ const now = require('performance-now');
 const {pool, schema} = require('./postgres.js');
 const dummyData = require('../dummy-data.js');
 
+let query = `INSERT INTO products (
+  id,
+  brand,
+  category,
+  color,
+  price,
+  linkedColors,
+  linkedSizes,
+  newProduct,
+  productAvailable
+) VALUES`;
+
 const seedPostgres = async () => {
   const start = now();
 
@@ -14,40 +26,34 @@ const seedPostgres = async () => {
   };
   await createTable();
 
-  const data = dummyData.generateRandomEntries();
-
   await pool.connect()
     .then(async () => {
-      for (let i = 0; i < data.length; i++) {
-        let query = `
-          INSERT INTO products (
-            id,
-            brand,
-            category,
-            color,
-            price,
-            linkedColors,
-            linkedSizes,
-            newProduct,
-            productAvailable
-          )
-          VALUES (
-            ${data[i]._id},
-            '${data[i].brand}',
-            '${data[i].category}',
-            '${data[i].color}',
-            ${data[i].price},
-            '{${data[i].linkedSizes}}'::INTEGER[],
-            '{${data[i].linkedColors}}'::INTEGER[],
-            ${data[i].newProduct},
-            ${data[i].productAvailable}
-          )
-        `;
+      let entries = [];
+      for (let i = 1; i <= 10000000; i++) {
+        let data = await dummyData.generateRandomEntry(i);
+        let entry = `(
+          ${i},
+          '${data.brand}',
+          '${data.category}',
+          '${data.color}',
+          ${data.price},
+          '{${data.linkedSizes}}'::INTEGER[],
+          '{${data.linkedColors}}'::INTEGER[],
+          ${data.newProduct},
+          ${data.productAvailable}
+        )`;
+        entries.push(entry);
 
-        await pool.query(query)
-          .catch(err => {
-            console.log('Error inserting into Postgres', err);
-          });
+        if (entries.length === 1000) {
+          entries = entries.toString();
+          await pool.query(query.concat(entries))
+            .then(() => {
+              entries = [];
+            })
+            .catch(err => {
+              console.log('Error inserting into Postgres', err);
+            });
+        }
       }
     })
     .catch(err => {
