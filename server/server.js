@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const {/* need to add queries */} = require('../database/postgres/postgres.js');
+const postgres = require('../database/postgres/postgres.js');
 
 const app = express();
 const port = 3003;
@@ -106,7 +106,6 @@ app.get('/api/product/:id', (req, res) => {
 
 app.put('/api/product/:id', (req, res) => {
   const productId = req.params.id;
-  console.log('body ->', req.body);
   database.updateQuery(productId, req.body)
     .then(result => {
       res.status(204).end();
@@ -133,12 +132,59 @@ app.delete('/api/product/:id', (req, res) => {
     });
 });
 
-// app.get('/api/postgres', async (req, res) => {
-//   await createTable()
-//     .then(() => {
-//       res.status(201).end();
-//     })
-//     .catch(err => {
-//       console.log('SERVER - Error creating table', err);
-//     });
-// });
+
+
+////////// Beginning of Postgres CRUD routes
+
+
+app.post('/postgres/product/', (req, res) => {
+  postgres.createPGQuery(req.body)
+    .then(() => {
+      res.status(201).send('New producted added to the database');
+    })
+    .catch(err => {
+      if (err) {
+        console.log('Error with postgres create route', err);
+      }
+    });
+});
+
+app.get('/postgres/product/:id', (req, res) => {
+  postgres.readPGQuery(req.params.id)
+    .then((response) => {
+      if (response === undefined) {
+        res.status(404).send('Product does not exist');
+      } else {
+        res.status(200).send(response);
+      }
+    })
+    .catch(err => {
+      if (err) {
+        console.log('Error with postgres read route', err);
+      }
+    });
+});
+
+app.put('/postgres/product/:id', (req, res) => {
+  postgres.updatePGQuery(req.params.id, req.body)
+    .then(() => {
+      res.status(200).send(`Product ${req.params.id} udpated`);
+    })
+    .catch(err => {
+      if (err) {
+        console.log('Error with postgres update route', err);
+      }
+    });
+});
+
+app.delete('/postgres/product/:id', (req, res) => {
+  postgres.deletePGQuery(req.params.id)
+    .then(() => {
+      res.status(204).end();
+    })
+    .catch(err => {
+      if (err) {
+        console.log('Error with postgres delete route', err);
+      }
+    });
+});
