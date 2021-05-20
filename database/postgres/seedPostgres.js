@@ -30,7 +30,7 @@ const seedPostgres = async () => {
     .then(async () => {
       let entries = [];
       for (let i = 1; i <= 10000000; i++) {
-        let data = await dummyData.generateRandomEntry(i);
+        let data = dummyData.generateRandomEntry(i);
         let entry = `(
           ${i},
           '${data.brand}',

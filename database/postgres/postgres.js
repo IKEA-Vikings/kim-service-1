@@ -1,4 +1,4 @@
-const {Client, Pool} = require('pg');
+const {Pool} = require('pg');
 const dummyData = require('../dummy-data.js');
 
 const pool = new Pool({
@@ -104,7 +104,6 @@ const updatePGQuery = async (id, data) => {
   queryData = queryData.substring(2);
 
   const query = `UPDATE products SET ${queryData} WHERE id = ${id}`;
-  console.log(query);
   await pool.query(query)
     .catch(err => {
       if (err) {
