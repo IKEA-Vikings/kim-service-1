@@ -60,7 +60,7 @@ var queryDatabase = function(productId, callback) {
 };
 
 
-////////// New seeding script
+////////// New seeding script for Mongo
 
 
 var seedDatabase = function(callback) {
@@ -94,7 +94,7 @@ var seedDatabase = function(callback) {
 };
 
 
-////////// Beginning of new CRUD queries
+////////// Beginning of new CRUD queries for Mongo
 
 
 const createQuery = async (data) => {

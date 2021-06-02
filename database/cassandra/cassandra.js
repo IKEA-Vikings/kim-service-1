@@ -28,11 +28,31 @@ const createTable = `
   )
 `;
 
+const createCassQuery = async (data) => {
 
+};
+
+const readCassQuery = async (id) => {
+  const query = `SELECT * FROM ikea.products WHERE id = ${id}`;
+  const {rows} = await client.execute(query)
+    .catch(err => {
+      console.log('Error with reading Cassandra database', err);
+    });
+  return rows[0];
+};
+
+const updateCassQuery = async (id, data) => {
+
+};
+
+const deleteCassQuery = async (id) => {
+
+};
 
 module.exports = {
   client,
   createKeyspace,
-  createTable
+  createTable,
+  readCassQuery
 
 };
