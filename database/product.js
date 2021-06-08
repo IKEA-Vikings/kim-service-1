@@ -16,9 +16,52 @@ const productSchema = new Schema({
 
 const Products = mongoose.model('product', productSchema);
 
+// // Original seeding script
+
+// var seedDatabase = function(callback) {
+//   mongoose.connect('mongodb://localhost/ikea', {useNewUrlParser: true, useUnifiedTopology: true});
+//   const database = mongoose.connection;
+//   database.on('error', err => console.log('error connecting:', err));
+//   database.once('open', () => console.log('connected to database'));
+//   database.dropDatabase()
+//     .then(() => {
+//       let entries = dummyData.generateRandomEntries();
+
+//       return Products.insertMany(entries);
+//     })
+//     .then((results) => {
+//       console.log('successfully seeded database');
+//       database.close();
+//       callback(null, results);
+//     })
+//     .catch((err) => {
+//       console.log('err seeding database', err);
+//       database.close();
+//       callback(err, null);
+//     });
+// };
+
+var queryDatabase = function(productId, callback) {
+  // DECIDE WHETHER OR NOT THIS IS SMART; DO I WANT TO BE OPENNING A DATABASE CONNECTION EVERYTIME ???
+  mongoose.connect('mongodb://localhost/ikea', {useNewUrlParser: true, useUnifiedTopology: true});
+  const database = mongoose.connection;
+  database.on('error', err => console.log('error connecting:', err));
+  database.once('open', () => console.log('connected to Mongo database'));
+
+  Products.findById(productId, (err, results) => {
+    if (err) {
+      database.close();
+      callback(err, null);
+    } else {
+      database.close();
+      callback(null, results);
+    }
+  });
+};
 
 
-// Seeding script
+////////// New seeding script for Mongo
+
 
 var seedDatabase = function(callback) {
   mongoose.connect('mongodb://localhost/ikea', {useNewUrlParser: true, useUnifiedTopology: true});
@@ -26,10 +69,17 @@ var seedDatabase = function(callback) {
   database.on('error', err => console.log('error connecting:', err));
   database.once('open', () => console.log('connected to database'));
   database.dropDatabase()
-    .then(() => {
-      let entries = dummyData.generateRandomEntries();
-
-      return Products.insertMany(entries);
+    .then(async () => {
+      let entries = [];
+      for (let i = 1; i <= 10000000; i++) {
+        entries.push(dummyData.generateRandomEntry(i));
+        if (entries.length === 100000) {
+          await Products.insertMany(entries);
+          console.log(`${i} entries saved`);
+          entries = [];
+        }
+      }
+      return 'Worked';
     })
     .then((results) => {
       console.log('successfully seeded database');
@@ -43,25 +93,8 @@ var seedDatabase = function(callback) {
     });
 };
 
-var queryDatabase = function(productId, callback) {
-  // DECIDE WHETHER OR NOT THIS IS SMART; DO I WANT TO BE OPENNING A DATABASE CONNECTION EVERYTIME ???
-  mongoose.connect('mongodb://localhost/ikea', {useNewUrlParser: true, useUnifiedTopology: true});
-  const database = mongoose.connection;
-  database.on('error', err => console.log('error connecting:', err));
-  database.once('open', () => console.log('connected to database'));
 
-  Products.findById(productId, (err, results) => {
-    if (err) {
-      database.close();
-      callback(err, null);
-    } else {
-      database.close();
-      callback(null, results);
-    }
-  });
-};
-
-////////// Beginning of new CRUD queries
+////////// Beginning of new CRUD queries for Mongo
 
 
 const createQuery = async (data) => {
@@ -152,8 +185,6 @@ const deleteQuery = async (id) => {
     });
 };
 
-
-////////// End of new CRUD queries
 
 module.exports = {
   seedDatabase,
