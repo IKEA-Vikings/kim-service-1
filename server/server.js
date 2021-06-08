@@ -1,3 +1,4 @@
+const newrelic = require('newrelic');
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -56,11 +57,12 @@ var formatResponse = function(dbData) {
 app.post('/api/product/', (req, res) => {
   postgres.createPGQuery(req.body)
     .then(() => {
-      res.status(201).send('New producted added to the database');
+      res.status(201).send('New product added to the database');
     })
     .catch(err => {
       if (err) {
         console.log('Error with postgres create route', err);
+        res.status(404).end();
       }
     });
 });
@@ -71,15 +73,14 @@ app.get('/api/product/:id', (req, res) => {
       if (response === undefined) {
         res.status(404).send('Product does not exist');
       } else {
-        console.log('response ->', response);
         let formattedResponse = formatResponse(response);
-        console.log('formatted response ->', formattedResponse);
         res.status(200).send(formattedResponse);
       }
     })
     .catch(err => {
       if (err) {
         console.log('Error with postgres read route', err);
+        res.status(404).end();
       }
     });
 });
