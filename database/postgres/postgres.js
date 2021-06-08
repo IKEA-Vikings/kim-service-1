@@ -1,3 +1,4 @@
+const newrelic = require('newrelic');
 const {Pool} = require('pg');
 const dummyData = require('../dummy-data.js');
 
@@ -79,6 +80,22 @@ const readPGQuery = async (id) => {
       }
     });
   return rows[0];
+  // let product;
+  // await pool.connect()
+  //   .then(async client => {
+  //     return await client.query(query)
+  //       .then(res => {
+  //         client.release();
+  //         product = res.rows[0];
+  //       })
+  //       .catch(err => {
+  //         if (err) {
+  //           client.release();
+  //           console.log('Error with Postgres read query'. err);
+  //         }
+  //       });
+  //   });
+  // return product;
 };
 
 const updatePGQuery = async (id, data) => {
