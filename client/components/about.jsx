@@ -88,6 +88,9 @@ class About extends React.Component {
     // })
     // .catch(err => console.error(err));
 
+    ///////////////////////////////////////////////////////////////////
+    /* COMMENT OUT REQUEST TO OTHER DATABASES UNTIL ALL DEPLOYED ON EC2
+
     axios.get(`${AWS.relatedColors}${queriedId}`)
       .then((response) => {
         return response.data;
@@ -122,6 +125,9 @@ class About extends React.Component {
       .catch((error) => {
         console.log('error fetching sizes', error);
       });
+
+    */
+    ///////////////////////////////////////////////////////////////////
 
     // fetch from Josh's service for star rating
     // axios.get(`${AWS.reviewAPI}${queriedId}`)

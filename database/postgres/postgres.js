@@ -3,10 +3,11 @@ const {Pool} = require('pg');
 const dummyData = require('../dummy-data.js');
 
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'sdc',
-  port: 5432
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
+  database: process.env.DB_DATABASE,
+  port: process.env.DB_PORT
 });
 
 pool.on('error', (err, client) => {
@@ -15,7 +16,6 @@ pool.on('error', (err, client) => {
 });
 
 const schema = `
-  DROP TABLE products;
   CREATE TABLE IF NOT EXISTS products (
   id INTEGER NOT NULL PRIMARY KEY,
   brand VARCHAR(15) NOT NULL,

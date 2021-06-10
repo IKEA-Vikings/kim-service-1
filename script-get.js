@@ -3,6 +3,7 @@ import {check} from 'k6';
 
 export let options = {
   scenarios: {
+    // eslint-disable-next-line camelcase
     constant_request_rate: {
       executor: 'constant-arrival-rate',
       rate: 10000,
