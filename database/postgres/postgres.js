@@ -1,5 +1,4 @@
 const newrelic = require('newrelic');
-require('dotenv').config();
 const {Pool} = require('pg');
 const dummyData = require('../dummy-data.js');
 
