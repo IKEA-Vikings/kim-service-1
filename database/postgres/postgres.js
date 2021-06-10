@@ -1,10 +1,12 @@
 const newrelic = require('newrelic');
+require('dotenv').config();
 const {Pool} = require('pg');
 const dummyData = require('../dummy-data.js');
 
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
   database: 'sdc',
   port: 5432
 });
@@ -15,7 +17,6 @@ pool.on('error', (err, client) => {
 });
 
 const schema = `
-  DROP TABLE products;
   CREATE TABLE IF NOT EXISTS products (
   id INTEGER NOT NULL PRIMARY KEY,
   brand VARCHAR(15) NOT NULL,
