@@ -44,7 +44,7 @@ class About extends React.Component {
       return;
     }
     // fetch produce size information
-    fetch(`/api/product/${queriedId}`)
+    fetch(`http://3.101.86.245:3003/api/product/${queriedId}`)
       .then((response) => {
         return response.json();
       })

@@ -27,3 +27,4 @@ dist/
 newrelic.js
 .env
 *.cer
+*.pem
